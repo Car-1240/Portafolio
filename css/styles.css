@@ -8,8 +8,20 @@ body {
     align-items: center;
     height: 100vh;
     overflow: hidden;
+}@media (max-width: 500px) {
+        /* Estilos para pantallas pequeñas */
+      }
+      
+      @media (min-width: 501px) and (max-width: 768px) {
+        /* Estilos para pantallas medianas */
+      }
+      
+      @media (min-width: 769px) {
+        /* Estilos para pantallas grandes */
 }
 
+
+ 
 .container {
     text-align: center;
 }

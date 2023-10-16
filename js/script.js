@@ -1,60 +1,56 @@
+const canvas = document.getElementById("animationCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-
-ctx.fillStyle = "black";
-ctx.beginPath();
-ctx.arc(catX, catY, 30, 0, Math.PI * 2);
-ctx.fill();
-for (let i = 0; i < 2; i++) {
-    ctx.fillStyle = "#fff";
-    ctx.beginPath();
-    ctx.arc(catX - 10 + i * 20, catY - 10, 5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-  const keyboardKeys = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-for (let i = 0; i < keyboardKeys.length; i++) {
-  ctx.fillStyle = "black";
-  ctx.fillRect(i * 30, catY + 30, 20, 20);
-
-  ctx.fillStyle = "white";
-  ctx.font = "16px Arial";
-  ctx.fillText(keyboardKeys[i], i * 30 + 10, catY + 50);
-}
-function drawCat() {
+function drawSmiley(x, y) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-    // Cabeza
-    ctx.fillStyle = "#000";
+
+    // Dibuja una carita feliz (puedes personalizar esto)
     ctx.beginPath();
-    ctx.arc(catX, catY, 30, 0, Math.PI * 2);
+    ctx.arc(x, y, 40, 0, Math.PI * 2, false); // Cabeza
+    ctx.fillStyle = "yellow";
     ctx.fill();
-  
-    // Ojos
-    for (let i = 0; i < 2; i++) {
-      ctx.fillStyle = "#fff";
-      ctx.beginPath();
-      ctx.arc(catX - 10 + i * 20, catY - 10, 5, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  
-    // Nariz
-    ctx.fillStyle = "#000";
-    ctx.beginPath();
-    ctx.arc(catX, catY + 5, 3, 0, Math.PI * 2);
-    ctx.fill();
-  
-    // Boca
-    ctx.beginPath();
-    ctx.arc(catX, catY + 10, 10, 0, Math.PI);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "black";
     ctx.stroke();
-  
-    catX += catSpeedX;
-    catY += catSpeedY;
-  
-    if (catX > canvas.width || catX < 0) {
-      catSpeedX = -catSpeedX;
+
+    ctx.beginPath();
+    ctx.arc(x - 15, y - 10, 10, 0, Math.PI, false); // Ojo izquierdo
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x + 15, y - 10, 10, 0, Math.PI, false); // Ojo derecho
+    ctx.fillStyle = "white";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(x, y, 20, 0, Math.PI, false); // Boca
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.stroke();
+}
+
+let x = 100; // Ajusta la posición inicial en el eje X
+let y = 500; // Ajusta la posición vertical para que aparezca debajo del div
+let dx = 2;
+let dy = -3; // Invertimos la dirección para que rebote hacia arriba
+
+function animate() {
+    x += dx;
+    y += dy;
+
+    if (x + 40 > canvas.width || x - 40 < 0) {
+        dx = -dx;
     }
-    if (catY > canvas.height || catY < 0) {
-      catSpeedY = -catSpeedY;
+    if (y - 40 < 0) {
+        dy = -dy;
     }
-  }
+
+    drawSmiley(x, y);
+
+    requestAnimationFrame(animate);
+}
+
+animate();
